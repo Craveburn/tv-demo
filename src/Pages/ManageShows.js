@@ -58,7 +58,7 @@ export default class ManageShows extends Component {
                 <section className="viewAllShows">
                     <header><h1>All Shows</h1></header>
                     <div>
-                        {this.renderShows}
+                        {this.renderShows()}
                     </div>
                 </section>
                 <section className="createShow">
