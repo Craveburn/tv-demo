@@ -1,0 +1,12 @@
+.manageShows {
+    display: flex;
+    max-width: 50;
+}
+
+.viewAllShows {
+    width: 50vw;
+}
+
+.createShow {
+
+}

@@ -1,7 +1,13 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom'
+import ReactPropTypes from 'prop-types'
 import Show from '../Show'
+import './ManageShows.css'
 
 export default class ManageShows extends Component {
+static propTypes = {
+    createShow: ReactPropTypes.func.isRequired
+}
     state = {
         show: {
             name: '',
@@ -32,21 +38,15 @@ export default class ManageShows extends Component {
         }
     }
     handleOnClick = () => {
-        this.setState((prev) => {
-            const existingShows = prev.shows
-            existingShows.push({
-                name: prev.newShowName,
-                rating: prev.newShowRating,
-                previewImg: prev.newShowPreviewImage,
-            })
-            return {
-                shows: existingShows
-            }
+        this.props.createShow({
+            name: this.state.newShowName,
+            rating: this.state.newShowRating,
+            previewImg: this.state.newShowPreviewImage,
         })
     }
     renderShows = () => {
-        return this.state.shows.map((show, i) => {
-            return(
+        return this.props.allShows.map((show, i) => {
+            return (
                 <Show key={i} name={show.name} rating={show.rating} previewImg={show.previewImg} />
             )
         })
@@ -54,7 +54,7 @@ export default class ManageShows extends Component {
     render() {
         // console.log(this.state)
         return (
-            <div className="main">
+            <div className="manageShows">
                 <section className="viewAllShows">
                     <header><h1>All Shows</h1></header>
                     <div>
@@ -71,6 +71,7 @@ export default class ManageShows extends Component {
                         <div><label>Preview Image:</label><input id="imgInput" onChange={this.handleOnChange} /></div>
                         <button onClick={this.handleOnClick}>Create </button>
                     </div>
+                    <Link to="/">Home</Link>
                 </section>
             </div>
         )
