@@ -14,13 +14,6 @@ static propTypes = {
             rating: -1,
             previewImg: ''
         },
-        shows: [
-            {
-                name: 'Breaking Bad',
-                rating: 5,
-                previewImg: 'https://ia.media-imdb.com/images/M/MV5BZDNhNzhkNDctOTlmOS00NWNmLWEyODQtNWMxM2UzYmJiNGMyXkEyXkFqcGdeQXVyNTMxMjgxMzA@._V1_UY268_CR4,0,182,268_AL_.jpg'
-            }
-        ]
     }
     handleOnChange = (e) => {
         if (e.target.id === "nameInput") {
@@ -51,12 +44,21 @@ static propTypes = {
             )
         })
     }
+    getAverageRating = () => {
+        const sumOfRatings = this.props.allShows.reduce((accumulator, show) => {
+           return show.rating + accumulator
+        }, 0)
+        return sumOfRatings / this.props.allShows.length
+    }
     render() {
         // console.log(this.state)
         return (
             <div className="manageShows">
                 <section className="viewAllShows">
-                    <header><h1>All Shows</h1></header>
+                    <header>
+                        <h1>All Shows</h1>
+                        <p>Average Rating: {this.getAverageRating()}</p>
+                    </header>
                     <div>
                         {this.renderShows()}
                     </div>
