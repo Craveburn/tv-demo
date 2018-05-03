@@ -12,8 +12,8 @@ export default class ViewShows extends Component {
         const nonMaShows = this.props.allShows.filter((show) => {
             return show.rating < 5
         } )
-        return nonMaShows.map((show) => {
-            return <Show name={show.name} rating={show.rating} previewImg={show.previewImg} />
+        return nonMaShows.map((show, index) => {
+            return <Show name={show.name} rating={show.rating} previewImg={show.previewImg} key={index} />
         })
     }
     render() {
