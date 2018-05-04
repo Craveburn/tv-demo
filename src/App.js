@@ -33,40 +33,32 @@ class App extends Component {
     console.log('finished executing promise')
   }
 
-  getShows = () => {
-    fetch('http://localhost:3001/shows')
-      .then((response) => {
-        console.log('response:', response)
-        return response.json()
-      })
-      .then((shows) => {
-        console.log('jsonData', shows)
-        this.setState({ shows })
-      })
-      .catch((error) => {
-        this.setState({ errorMessage: error })
-      })
+  getShows = async () => {
+    try {
+      const showsResponse = await fetch('http://localhost:3001/shows')
+      const shows = await showsResponse.json()
+      this.setState({ shows })
+    } catch (error) {
+      this.setState({ errorMessage: error })
+    }
   }
 
-  postShow = (showToSave) => {
-    const postInit = {
-      method: 'POST',
-      mode: 'cors',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(showToSave)
+  postShow = async (showToSave) => {
+      const postInit =  {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(showToSave)
+      }
+      try {
+      const postShowResponse = await fetch('http://localhost:3001/shows', postInit)
+      const show = await postShowResponse.json()
+      this.createShow(show)
+    } catch (error) {
+      this.setState({ errorMessage: error })
     }
-    fetch('http://localhost:3001/shows', postInit)
-      .then((postShowResponse) => {
-        return postShowResponse.json()
-      })
-      .then((show) => {
-        this.createShow(show)
-      })
-      .catch((error) => {
-        this.setState({ errorMessage: error })
-      })
   }
 
   renderError = () => {
